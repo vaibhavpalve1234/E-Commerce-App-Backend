@@ -1,11 +1,10 @@
 const logger = require("../logger")
 
 
-const notFound = (req, res, next) => {
-    const error = new Error(`Not Found - ${req.originalUrl}`)
-    logger.warn(`Not Found - ${req.originalUrl}`)
-    res.status(404)
-    next(error)
+const notFound = (message) => {
+    const error = new Error(`Not Found `)
+    logger.warn(`Not Found${message}`)
+    res.status(404).send({msg:message, error})
   }
   
   const errorHandler = (err, req, res, next) => {
