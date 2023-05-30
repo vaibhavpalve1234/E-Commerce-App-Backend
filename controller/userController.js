@@ -3,6 +3,7 @@ const logger = require("../logger")
 const UserModel = require("../model/User.Model")
 const { notFound } = require("../utils/errorhandler")
 const {validatePassword, getHashPassword, generateAccessToken} = require("../utils/jwtToken")
+const validateMongoDbId = require("../utils/validateMongooseId")
 
 
 module.exports = {
@@ -47,7 +48,7 @@ module.exports = {
                 return res.status(400).send(result)
             }
             if(await validatePassword(password,user[0].password)){
-                let token = await generateAccessToken({password: user[0].password,email:email, firstname:user[0].firstname, lastname:user[0].lastname});
+                let token = await generateAccessToken({_id: user[0]._id,password: user[0].password,email:email, firstname:user[0].firstname, lastname:user[0].lastname});
                 return res.send({mesg:"user login succefully.", token})
             }
             
@@ -70,6 +71,7 @@ module.exports = {
     getOneUsers: async(req, res, next)=>{
         try {
             const id =  req.params.id
+            await validateMongoDbId(id)
             if(!id){
                 let result = notFound("user not found")
                 return res.status(400).send(result)
@@ -173,6 +175,7 @@ module.exports = {
     updatePassword: async(req, res, next)=>{
         try {
             const {id,email, newPassword} = req.body
+            await validateMongoDbId(id)
             if(!id || !newPassword || !email){
                 let result = notFound("please provide correct emailId and ID or newPassword -----> from updatePassword router")
                 return res.status(400).send(result)
