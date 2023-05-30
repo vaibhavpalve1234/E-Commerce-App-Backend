@@ -12,7 +12,22 @@ module.exports = {
              await signUpSchema.validateAsync(req.body)
             next()
         } catch (error) {
-            console.log(error)
+            res.send(error.details[0].message, {}, 400)
+        }
+    },
+    validteProductSchema: async(req, res, next)=>{
+        try {
+            const productSchema = Joi.object({
+                name: Joi.string().regex(/^[a-zA-Z0-9]*$/),
+                image: Joi.string().regex(/^[a-zA-Z0-9]*$/),
+                brand: Joi.string().regex(/^[a-zA-Z0-9]*$/),
+                category: Joi.string().regex(/^[a-zA-Z0-9]*$/),
+                description: Joi.string().regex(/^[a-zA-Z0-9]*$/),
+                brand: Joi.string().regex(/^[a-zA-Z0-9]*$/),
+            })
+             await productSchema.validateAsync(req.body)
+            next()
+        } catch (error) {
             res.send(error.details[0].message, {}, 400)
         }
     }
