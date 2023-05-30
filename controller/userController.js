@@ -38,12 +38,13 @@ module.exports = {
         }
         
     },
-    login: async(req, res)=>{
+    login: async(req, res, next)=>{
         try {
             const { email, password} = req.body
             let user = await UserModel.find({email})
-            if(!user){
-                return notFound("user not found")
+            if(user.length == 0){
+                let result = notFound("user not found")
+                return res.status(400).send(result)
             }
             if(await validatePassword(password,user[0].password)){
                 let token = await generateAccessToken({password: user[0].password,email:email, firstname:user[0].firstname, lastname:user[0].lastname});
@@ -52,8 +53,8 @@ module.exports = {
             
             return res.send("user password and email id wrong.")
         } catch (error) {
-            logger.warn(error)
-            return res.send(error)
+            next(error)
+            return res.status(404).send({error})
         }
     }
 }

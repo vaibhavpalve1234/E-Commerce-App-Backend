@@ -15,6 +15,11 @@ let userSchema = mongoose.Schema({
         required:true,
         unique:true,
     },
+    role: {
+        type: String,
+        enum: ['admin', 'user','reseller'],
+        default: 'user'
+      },
     password:{
         type:String,
         required:true,

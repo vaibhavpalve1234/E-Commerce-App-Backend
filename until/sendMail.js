@@ -16,11 +16,9 @@ const oAuth2client = new google.auth.OAuth2(
 
 oAuth2client.setCredentials({ refresh_token: refreshToken })
 
-const sendMail = async (from, to, subject, text, fileData) => {
+const cronSendMail = async (from, to, subject, name, errordata,  fileData) => {
   try {
     const accessToken = await oAuth2client.getAccessToken();
-    console.log(accessToken)
-
     const transport = nodemailer.createTransport({
       service: 'gmail',
       secure: true,
@@ -38,8 +36,13 @@ const sendMail = async (from, to, subject, text, fileData) => {
       from: from, // sender address
       to: to, // list of receivers
       subject: subject, // Subject line
-      text: text, // plain text body
-      html: "<b>Error in Code Please solve it.</b>", // html body
+      html: `<div>\
+      <p>Here is the Error information for ${name}</p>\
+      <p><u>Data</u></p>
+      <div>${JSON.stringify(errordata) || errordata}</div>
+      <p><u>User Information are below</u></p>
+      <p>Thank You</p>
+      </div>`, // html body
       attachments: [
         {
           filename: fileData.filename,
@@ -57,4 +60,4 @@ const sendMail = async (from, to, subject, text, fileData) => {
   }
 };
 
-module.exports = sendMail
+module.exports = cronSendMail

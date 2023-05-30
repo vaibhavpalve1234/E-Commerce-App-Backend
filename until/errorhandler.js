@@ -3,8 +3,8 @@ const logger = require("../logger")
 
 const notFound = (message) => {
     const error = new Error(`Not Found `)
-    logger.warn(`Not Found${message}`)
-    res.status(404).send({msg:message, error})
+    logger.warn(`Not Found ${message}`)
+    return {msg:message, error}
   }
   
   const errorHandler = (err, req, res, next) => {

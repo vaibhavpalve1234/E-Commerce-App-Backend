@@ -4,7 +4,8 @@ const cors = require('cors');
 const connectDB = require('../connection/mongodb_connect');
 const bodyParser = require('body-parser');
 const logger = require('../logger');
-const AuthRouter = require('../router/user')
+const AuthRouter = require('../router/user');
+const { notFound, errorHandler } = require('../until/errorhandler');
 const port = process.env.SERVER_PORT || 3000;
 const app = express();
 
@@ -13,6 +14,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use('/api/v1', AuthRouter)
 
+app.use(notFound)
+app.use(errorHandler)
 app.listen(port, async() =>{
     try {
         await connectDB()
@@ -22,3 +25,4 @@ app.listen(port, async() =>{
         logger.warn(`ERROR IN SERVER: ${err.Error}`)
     }
 })
+require('../until/cronJob')
