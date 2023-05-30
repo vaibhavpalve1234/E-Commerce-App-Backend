@@ -6,7 +6,7 @@ const cronSendMail = require('./sendMail');
 const {asyncForEach} = require('./asyncForEach');
 const { makeYesterday } = require('./dateFormate');
 
-cron.schedule("0 6 * * *", async()=>{
+cron.schedule("* 12 * * *", async()=>{
     console.log("------------------------------------------SEND ERROR MAIL--------------------------------------------------------------")
     let mails = []
     try {

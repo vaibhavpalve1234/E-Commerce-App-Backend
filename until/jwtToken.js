@@ -19,6 +19,16 @@ module.exports = {
             next()
         })
     },
+    isAgent: (req, res, next) => {
+        const authHeader = req.headers['x-api-key']
+        if (authHeader == null) return res.sendStatus(401).send("provided ax-api-key is empty")
+        if(authHeader === process.env.API_KEY){
+            next()
+        }
+        else{
+            return res.status(403).send("please provide api-key correct")
+        }
+    },
     getHashPassword: async(password)=>{
         return await bcrypt.hash(password, salt)
     },
