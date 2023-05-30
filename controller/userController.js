@@ -1,8 +1,8 @@
 'use strict'
 const logger = require("../logger")
 const UserModel = require("../model/User.Model")
-const { notFound } = require("../until/errorhandler")
-const {validatePassword, getHashPassword, generateAccessToken} = require("../until/jwtToken")
+const { notFound } = require("../utils/errorhandler")
+const {validatePassword, getHashPassword, generateAccessToken} = require("../utils/jwtToken")
 
 
 module.exports = {
@@ -170,4 +170,25 @@ module.exports = {
             return res.status(404).send({error})
         }
     }, 
+    updatePassword: async(req, res, next)=>{
+        try {
+            const {id,email, newPassword} = req.body
+            if(!id || !newPassword || !email){
+                let result = notFound("please provide correct emailId and ID or newPassword -----> from updatePassword router")
+                return res.status(400).send(result)
+            }
+            let result = await UserModel.findOne({_id:id})
+            if(result){
+                const updateNewPassword = await UserModel.updateOne({email:email},{password: await getHashPassword(newPassword)});
+                if(updateNewPassword.modifiedCount === 1){
+                    return res.status(200).send(updateNewPassword)
+                }
+                return res.status(400).json({msg:"user password not updated."})
+            }
+            return res.status(200).send({msg:"user not found in Database"})
+        } catch (error) {
+            next(error)
+            return res.status(404).send({error})
+        }
+    }
 }

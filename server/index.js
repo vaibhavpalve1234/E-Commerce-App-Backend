@@ -5,7 +5,7 @@ const connectDB = require('../connection/mongodb_connect');
 const bodyParser = require('body-parser');
 const logger = require('../logger');
 const AuthRouter = require('../router/user');
-const { notFound, errorHandler } = require('../until/errorhandler');
+const { notFound, errorHandler } = require('../utils/errorhandler');
 const port = process.env.SERVER_PORT || 3000;
 const app = express();
 
@@ -25,4 +25,4 @@ app.listen(port, async() =>{
         logger.warn(`ERROR IN SERVER: ${err.Error}`)
     }
 })
-require('../until/cronJob')
+require('../utils/cronJob')
