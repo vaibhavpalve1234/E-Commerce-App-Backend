@@ -5,8 +5,8 @@ const logger = require('../logger');
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10)
 module.exports = {
-    generateAccessToken: (password) => {
-        return jwt.sign( {password: password}, process.env.TOKEN_SECRET, { expiresIn: 60 * 60});
+    generateAccessToken: (data) => {
+        return jwt.sign( data, process.env.TOKEN_SECRET, { expiresIn: 60 * 60});
     },
 
     authenticateToken: (req, res, next) => {
@@ -14,9 +14,7 @@ module.exports = {
         const token = authHeader && authHeader.split(' ')[1]
         if (token == null) return res.sendStatus(401)
         jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-            console.log(err)
-            logger.warn(err)
-            if (err) return res.sendStatus(403)
+            if (err) return res.status(403).send("token expired")
             req.user = user
             next()
         })

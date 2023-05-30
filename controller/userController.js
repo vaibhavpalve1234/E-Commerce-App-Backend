@@ -2,7 +2,7 @@
 const logger = require("../logger")
 const UserModel = require("../model/User.Model")
 const { notFound } = require("../until/errorhandler")
-const {validatePassword, getHashPassword} = require("../until/jwtToken")
+const {validatePassword, getHashPassword, generateAccessToken} = require("../until/jwtToken")
 
 
 module.exports = {
@@ -18,9 +18,13 @@ module.exports = {
                 let newPassword = await getHashPassword(password)
                 const newUser = await UserModel.create({password: newPassword,email:email, firstname:firstname, lastname:lastname})
                 if(!newUser){
-                    logger.warn("issue in code")
+                    logger.warn("isssue in user sign up router!!");
+                    res.json({
+                        msg:"some error in router",
+                        success: false
+                    })
                 }
-                res.status(200).json(newUser)
+                res.status(200).json({newUser})
             }
             else{
                 res.json({
@@ -42,8 +46,10 @@ module.exports = {
                 return notFound("user not found")
             }
             if(await validatePassword(password,user[0].password)){
-                return res.send("user login succefully.")
+                let token = await generateAccessToken({password: user[0].password,email:email, firstname:user[0].firstname, lastname:user[0].lastname});
+                return res.send({mesg:"user login succefully.", token})
             }
+            
             return res.send("user password and email id wrong.")
         } catch (error) {
             logger.warn(error)
