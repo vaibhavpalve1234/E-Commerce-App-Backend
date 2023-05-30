@@ -151,12 +151,12 @@ module.exports = {
         try {
             const email = req.query.email
             if(!email){
-                let result = notFound("please provide correct emailId ")
+                let result = notFound("please provide correct emailId -----> from removeAdmin router")
                 return res.status(400).send(result)
             }
             const result = await UserModel.find({email})
             if(result.length < 1){
-                let result = notFound("Admin not found in Database")
+                let result = notFound("Admin not found in Database -----> from removeAdmin router")
                 return res.status(400).send(result)
             }
             if(result[0].role === "admin"){
