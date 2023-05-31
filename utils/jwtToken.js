@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10)
 module.exports = {
     generateAccessToken: (data) => {
-        return jwt.sign( data, process.env.TOKEN_SECRET, { expiresIn: 60 * 60});
+        return jwt.sign( data, process.env.TOKEN_SECRET, { expiresIn: '15d'});
     },
 
     authenticateToken: (req, res, next) => {

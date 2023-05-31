@@ -13,11 +13,12 @@ module.exports = {
             const password = req.body.password
             const firstname = req.body.firstname
             const lastname = req.body.lastname
+            const phone = req.body.phone
             const findUser =  await UserModel.findOne({email})
             if(!findUser){
                 //create user...
                 let newPassword = await getHashPassword(password)
-                const newUser = await UserModel.create({password: newPassword,email:email, firstname:firstname, lastname:lastname})
+                const newUser = await UserModel.create({password: newPassword,email:email, firstname:firstname, lastname:lastname, phone:phone})
                 if(!newUser){
                     logger.warn("isssue in user sign up router!!");
                     res.json({
@@ -48,7 +49,7 @@ module.exports = {
                 return res.status(400).send(result)
             }
             if(await validatePassword(password,user[0].password)){
-                let token = await generateAccessToken({_id: user[0]._id,password: user[0].password,email:email, firstname:user[0].firstname, lastname:user[0].lastname});
+                let token = await generateAccessToken({_id: user[0]._id,password: user[0].password,email:email, firstname:user[0].firstname, lastname:user[0].lastname, phone:user[0].phone});
                 return res.send({mesg:"user login succefully.", token})
             }
             
