@@ -1,5 +1,5 @@
-var paytm_config = require('../paytmController/payment/config').paytm_config;
-var paytm_checksum = require('../paytmController/payment/checksum.js');
+var paytm_config = require('./payment/config').paytm_config;
+var paytm_checksum = require('./payment/checksum.js');
 var rn = require('random-number');
 
 module.exports = {

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { payment, generate_checksum , verify_checksum} = require('../../paytmController/paymentController')
+const { payment, generate_checksum , verify_checksum} = require('../../controller/paytmController')
 const { authenticateToken } = require('../../utils/jwtToken')
 
 router.get("/payment", payment)
