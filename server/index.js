@@ -5,7 +5,6 @@ const connectDB = require('../connection/mongodb_connect');
 const bodyParser = require('body-parser');
 const logger = require('../logger');
 const AuthRouter = require('../router/user');
-const ProductRouter = require('../router/product');
 const { notFound, errorHandler } = require('../utils/errorhandler');
 const port = process.env.SERVER_PORT || 3000;
 const app = express();
@@ -15,7 +14,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 
 app.use('/api/v1', AuthRouter)
-app.use('/api/v1', ProductRouter)
 
 app.use(notFound)
 app.use(errorHandler)
