@@ -1,9 +1,9 @@
 'use strict'
-const logger = require("../logger")
-const UserModel = require("../model/User.Model")
-const { notFound } = require("../utils/errorhandler")
-const {validatePassword, getHashPassword, generateAccessToken} = require("../utils/jwtToken")
-const validateMongoDbId = require("../utils/validateMongooseId")
+const logger = require("../../logger")
+const UserModel = require("../../model/User.Model")
+const { notFound } = require("../../utils/errorhandler")
+const {validatePassword, getHashPassword, generateAccessToken} = require("../../utils/jwtToken")
+const validateMongoDbId = require("../../utils/validateMongooseId")
 
 
 module.exports = {

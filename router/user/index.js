@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { signUp, login, getUsers, getOneUsers, getAdminUsers, makeAdminUsers, removeUser, removeAdmin, updatePassword } = require('../../userController/userController')
+const { signUp, login, getUsers, getOneUsers, getAdminUsers, makeAdminUsers, removeUser, removeAdmin, updatePassword } = require('../../controller/userController')
 const { validteSignupSchema } = require('../../middlewares/validationSchema')
 const { authenticateToken, isAgent } = require('../../utils/jwtToken')
 
