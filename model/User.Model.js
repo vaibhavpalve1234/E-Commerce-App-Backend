@@ -15,6 +15,10 @@ let userSchema = mongoose.Schema({
         required:true,
         unique:true,
     },
+    phone:{
+        type:String,
+        unique:false,
+    },
     role: {
         type: String,
         enum: ['admin', 'user','reseller'],

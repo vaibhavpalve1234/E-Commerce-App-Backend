@@ -60,4 +60,40 @@ const cronSendMail = async (from, to, subject, name, errordata,  fileData) => {
   }
 };
 
-module.exports = cronSendMail
+const feedbackMail = async (from, to, subject, errordata) => {
+  try {
+    const accessToken = await oAuth2client.getAccessToken();
+    const transport = nodemailer.createTransport({
+      service: 'gmail',
+      secure: true,
+      auth: {
+        type: "OAuth2",
+        user: process.env.TEST_USER,
+        clientId: clientID,
+        clientSecret: clientSecret,
+        refreshToken: refreshToken,
+        accessToken: accessToken
+      }
+    })
+
+    let mailOptions = {
+      from: from, // sender address
+      to: to, // list of receivers
+      subject: subject, // Subject line
+      html: `<div>\
+      <p>Thanks you for provided feedback or requirement.</p>\
+      <p><u>Data</u></p>
+      <div>${errordata}</div>
+      <p>Thank You</p>
+      </div>`,
+    }
+    let result = await transport.sendMail(mailOptions);
+    return result
+  } catch (error) {
+    logger.warn(error)
+    return error
+
+  }
+};
+
+module.exports = {cronSendMail, feedbackMail}

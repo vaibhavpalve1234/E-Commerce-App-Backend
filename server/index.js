@@ -8,9 +8,11 @@ const bodyParser = require('body-parser');
 const logger = require('../logger');
 const AuthRouter = require('../router/user');
 const PaymentRouter = require('../router/paytm');
+const FeedbackRouter = require('../router/feedback')
 const Razorpay = require('../router/razorpay');
 const { notFound, errorHandler } = require('../utils/errorhandler');
 const port = process.env.SERVER_PORT || 3000;
+
 const app = express();
 app.use(cors());
 app.engine('html', require('ejs').renderFile)
@@ -22,6 +24,7 @@ app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use('/api/v1', AuthRouter)
 app.use('/api/v1', PaymentRouter)
 app.use('/api/v1', Razorpay)
+app.use('/api/v1', FeedbackRouter)
 
 app.use(notFound)
 app.use(errorHandler)

@@ -2,7 +2,7 @@ require('dotenv').config({path: `../config/.env.development`})
 const cron = require('node-cron');
 const logger = require('../logger');
 const UserModel = require('../model/User.Model');
-const cronSendMail = require('./sendMail');
+const {cronSendMail} = require('./sendMail');
 const {asyncForEach} = require('./asyncForEach');
 const { makeYesterday } = require('./dateFormate');
 
