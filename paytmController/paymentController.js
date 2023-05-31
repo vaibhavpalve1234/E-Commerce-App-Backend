@@ -17,6 +17,7 @@ module.exports = {
 			paramarray['CHANNEL_ID'] = paytm_config.CHANNEL_ID; //Provided by Paytm
 			paramarray['TXN_AMOUNT'] = req.body.amount + '.00'; // transaction amount
 			paramarray['WEBSITE'] = paytm_config.WEBSITE; //Provided by Paytm
+			paramarray['PAYTM_FINAL_URL'] = paytm_config.PAYTM_FINAL_URL
 			paramarray['CALLBACK_URL'] = `http://localhost:8080/api/v1/verify_checksum`;//Handle callback send by payment
 			paramarray['EMAIL'] = 'vaibhavpalve1234@gmail.com'; // customer email id
 			paramarray['MOBILE_NO'] = '7776090314'; // customer 10 digit mobile no.
