@@ -1,8 +1,8 @@
 require('dotenv').config({ path: `./config/.env.${process.env.NODE_ENV}` })
 const razorpay = require('razorpay')
 const crypto = require("crypto");
-const logger = require('../../logger')
-const { KEY, SECRET } = require('../../config/config').razorpay
+const logger = require('../../../logger')
+const { KEY, SECRET } = require('../config').razorpay
 module.exports = {
     order: async (req, res, next) => {
         try {
