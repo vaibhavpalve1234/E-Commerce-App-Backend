@@ -2,11 +2,11 @@ require('dotenv').config({path: `../config/.env.development`})
 const cron = require('node-cron');
 const logger = require('../logger');
 const UserModel = require('../model/User.Model');
-const cronSendMail = require('./sendMail');
+const {cronSendMail} = require('./sendMail');
 const {asyncForEach} = require('./asyncForEach');
 const { makeYesterday } = require('./dateFormate');
 
-cron.schedule("* 12 * * *", async()=>{
+cron.schedule("0 6 * * *", async()=>{
     console.log("------------------------------------------SEND ERROR MAIL--------------------------------------------------------------")
     let mails = []
     try {
