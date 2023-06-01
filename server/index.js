@@ -28,6 +28,15 @@ app.use('/api/v1', FeedbackRouter)
 
 app.use(notFound)
 app.use(errorHandler)
+
+app.get("/", async(req, res) =>{
+    try {
+        res.send("server started you can check all apis 🍔❤️😁😁")
+    } catch (error) {
+        console.log(`Error : ${err.Error}`);
+        logger.warn(`ERROR IN SERVER: ${err.Error}`)
+    }
+})
 app.listen(port, async() =>{
     try {
         await connectDB()
