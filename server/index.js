@@ -21,6 +21,16 @@ app.set('views', path.join(__dirname, '../controller/paytmController/views'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 
+app.get("/", async(req, res) =>{
+    try {
+        console.log(req)
+        res.send("server started you can check all apis 🍔❤️😁😁")
+    } catch (err) {
+        console.log(`Error : ${err.Error}`);
+        logger.warn(`ERROR IN SERVER: ${err.Error}`)
+    }
+})
+
 app.use('/api/v1', AuthRouter)
 app.use('/api/v1', PaymentRouter)
 app.use('/api/v1', Razorpay)
@@ -29,14 +39,6 @@ app.use('/api/v1', FeedbackRouter)
 app.use(notFound)
 app.use(errorHandler)
 
-app.get("/", async(req, res) =>{
-    try {
-        res.send("server started you can check all apis 🍔❤️😁😁")
-    } catch (error) {
-        console.log(`Error : ${err.Error}`);
-        logger.warn(`ERROR IN SERVER: ${err.Error}`)
-    }
-})
 app.listen(port, async() =>{
     try {
         await connectDB()
