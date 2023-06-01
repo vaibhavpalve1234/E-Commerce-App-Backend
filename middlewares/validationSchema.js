@@ -7,6 +7,7 @@ module.exports = {
                 firstname: Joi.string().regex(/^[a-zA-Z0-9]*$/).min(3).max(100).required(),
                 lastname: Joi.string().regex(/^[a-zA-Z0-9]*$/).min(3).max(100),
                 email: Joi.string().required(),
+                phone: Joi.string(),
                 password: Joi.string().pattern(/^[a-zA-Z0-9*&^%$#@!-_]{5,30}$/).required(),
             })
              await signUpSchema.validateAsync(req.body)
